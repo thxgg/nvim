@@ -1,0 +1,13 @@
+vim.opt.number = true
+vim.opt.breakat = " \t!@*-+;:,./?"
+vim.opt.breakindent = true
+vim.opt.breakindentopt = 'shift:2,sbr'
+vim.opt.showbreak = '↪'
+vim.opt.clipboard = "unnamedplus"
+vim.opt.expandtab = true
+vim.opt.guicursor = ""
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.linebreak = true
+vim.opt.list = true
+vim.opt.listchars = "tab:» ,eol:↩,trail:-"
