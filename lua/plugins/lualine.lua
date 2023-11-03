@@ -25,7 +25,7 @@ return {
             lualine_b = {},
             lualine_c = {},
             lualine_x = {},
-            lualine_y = {},
+            lualine_y = { require("copilot_status").status_string },
             lualine_z = { { 'tabs', symbols = '' } }
         },
         extensions = { 'aerial', 'lazy', 'nvim-dap-ui', 'mason', 'trouble' },
