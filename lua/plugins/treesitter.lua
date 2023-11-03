@@ -3,9 +3,9 @@ return {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         dependencies = {
-            { "windwp/nvim-ts-autotag" },
+            { 'windwp/nvim-ts-autotag' },
         },
-        config = function () 
+        config = function ()
             local configs = require('nvim-treesitter.configs')
 
             configs.setup({
@@ -49,7 +49,7 @@ return {
                     'sql'
                 },
                 sync_install = false,
-                highlight = { 
+                highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,
                 },

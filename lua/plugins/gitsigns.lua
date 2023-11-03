@@ -32,8 +32,8 @@ return {
             end, {expr=true})
 
             -- Actions
-            map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = "[G]it [B]lame" })
-            map('n', '<leader>gD', gs.diffthis, { desc = "[G]it [D]iff" })
+            map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = '[G]it [B]lame' })
+            map('n', '<leader>gD', gs.diffthis, { desc = '[G]it [D]iff' })
         end
     }
 }
