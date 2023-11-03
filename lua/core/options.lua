@@ -35,3 +35,7 @@ opt.wrapmargin = 2
 -- Right click mouse menu
 vim.cmd.aunmenu{'PopUp.How-to\\ disable\\ mouse'}
 vim.cmd.aunmenu{'PopUp.-1-'}
+
+-- Netrw
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1

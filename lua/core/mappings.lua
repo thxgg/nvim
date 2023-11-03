@@ -19,7 +19,6 @@ map("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease vertical size
 map("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase vertical size by 2" })
 
 -- Navigation
-map("n", "<leader>e", ":Ex<CR>", { desc = "[E]xplore Files" })
 map("n", "H", ":bprevvious<CR>", { desc = "Previous buffer" })
 map("n", "L", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Recenter cursor after half-page jumping down" })
