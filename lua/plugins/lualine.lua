@@ -12,7 +12,7 @@ return {
             globalstatus = true,
         },
         sections = {
-            lualine_a = { { 'mode', fmt = function(s) return s:sub(1, 1) end } },
+            lualine_a = { 'mode' },
             lualine_b = { 'filename' },
             lualine_c = { 'aerial', 'diagnostics' },
             lualine_x = { { 'fileformat', symbols = { unix = 'lf', dos = 'crlf', mac = 'cr' } },
