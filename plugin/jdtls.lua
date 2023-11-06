@@ -126,6 +126,11 @@ local function jdtls_on_attach(_, bufnr)
         command = "lua vim.lsp.buf.format() require('jdtls').organize_imports()",
     })
 
+    map('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Show tooltip' })
+    map('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Show signature help' })
+    map('n', '<F2>', vim.lsp.buf.rename, { buffer = bufnr, desc = 'Rename' })
+    map('n', '<F3>', vim.lsp.buf.format, { buffer = bufnr, desc = 'Format buffer' })
+    map('n', '<F4>', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code Action' })
     map('n', '<leader>roi', "<CMD>lua require('jdtls').organize_imports()<CR>",
         { buffer = bufnr, desc = "Organize imports" })
     map('n', '<leader>rev', "<CMD>lua require('jdtls').extract_variable()<CR>",

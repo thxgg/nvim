@@ -14,7 +14,7 @@ return {
         sections = {
             lualine_a = { 'mode' },
             lualine_b = { 'filename', 'diagnostics' },
-            lualine_c = { 'aerial' },
+            lualine_c = { { 'aerial', sep = ' ❭ ' } },
             lualine_x = { { 'fileformat', symbols = { unix = 'lf', dos = 'crlf', mac = 'cr' } },
                 { 'filetype',   icons_enabled = false } },
             lualine_y = { { 'diff' } },
