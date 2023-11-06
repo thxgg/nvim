@@ -13,8 +13,8 @@ return {
         },
         sections = {
             lualine_a = { 'mode' },
-            lualine_b = { 'filename' },
-            lualine_c = { 'aerial', 'diagnostics' },
+            lualine_b = { 'filename', 'diagnostics' },
+            lualine_c = { 'aerial' },
             lualine_x = { { 'fileformat', symbols = { unix = 'lf', dos = 'crlf', mac = 'cr' } },
                 { 'filetype',   icons_enabled = false } },
             lualine_y = { { 'diff' } },
