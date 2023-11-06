@@ -28,6 +28,6 @@ return {
             lualine_y = { require("copilot_status").status_string },
             lualine_z = { { 'tabs', symbols = '' } }
         },
-        extensions = { 'aerial', 'lazy', 'nvim-dap-ui', 'mason', 'trouble' },
+        extensions = { 'aerial', 'lazy', 'nvim-dap-ui', 'nvim-tree', 'mason', 'trouble' },
     }
 }
