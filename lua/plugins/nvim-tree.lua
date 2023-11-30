@@ -6,6 +6,7 @@ return {
         disable_netrw = true,
         view = {
             side = 'right',
+            adaptive_size = true
         },
         renderer = {
             icons = {
