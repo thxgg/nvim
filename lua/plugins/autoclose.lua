@@ -1,4 +1,4 @@
 return {
-   'm4xshen/autoclose.nvim',
-   otps = {}
+    'm4xshen/autoclose.nvim',
+    config = true
 }

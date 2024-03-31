@@ -23,17 +23,20 @@ return {
                 if vim.wo.diff then return ']g' end
                 vim.schedule(function() gs.next_hunk() end)
                 return '<Ignore>'
-            end, {expr=true})
+            end, { expr = true })
 
             map('n', '[g', function()
                 if vim.wo.diff then return '[g' end
                 vim.schedule(function() gs.prev_hunk() end)
                 return '<Ignore>'
-            end, {expr=true})
+            end, { expr = true })
 
             -- Actions
-            map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = '[G]it [B]lame' })
+            map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = '[G]it [B]lame' })
             map('n', '<leader>gD', gs.diffthis, { desc = '[G]it [D]iff' })
+            map('n', '<leader>gp', gs.preview_hunk, { desc = '[G]it [P]review' })
+            map('n', '<leader>gP', gs.preview_hunk_inline, { desc = '[G]it [P]review Inline' })
+            map('n', '<leader>gl', gs.setqflist, { desc = '[G]it [L]ist Hunks' })
         end
     }
 }

@@ -11,6 +11,11 @@ vim.g.mapleader = ' '
 map('n', 'W', ':w<CR>', { desc = '[W]rite Buffer' })
 map('n', 'Q', ':q<CR>', { desc = '[Q]uit Buffer' })
 map('n', 'Qa', ':qa<CR>', { desc = '[Q]uit [A]ll Buffers' })
+vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('Wq', 'wq', {})
+vim.api.nvim_create_user_command('Wqa', 'wqa', {})
+vim.api.nvim_create_user_command('Q', 'q', {})
+vim.api.nvim_create_user_command('Qa', 'qa', {})
 
 -- Resize with arrows
 map('n', '<C-Up>', ':resize -2<CR>', { desc = 'Decrease size by 2' })
@@ -19,7 +24,7 @@ map('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Decrease vertical size
 map('n', '<C-Right>', ':vertical resize +2<CR>', { desc = 'Increase vertical size by 2' })
 
 -- Navigation
-map('n', 'H', ':bprevvious<CR>', { desc = 'Previous buffer' })
+map('n', 'H', ':bprevious<CR>', { desc = 'Previous buffer' })
 map('n', 'L', ':bnext<CR>', { desc = 'Next buffer' })
 map('n', '<C-d>', '<C-d>zz', { desc = 'Recenter cursor after half-page jumping down' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Recenter cursor after half-page jumping up' })
@@ -44,3 +49,7 @@ map('n', 'J', 'mzJ`z', { desc = 'Append line below with a space without moving c
 -- Search
 map('n', 'n', 'nzzzv', { desc = 'Recenter cursor after next lookup' })
 map('n', 'N', 'Nzzzv', { desc = 'Recenter cursor after previous lookup' })
+
+-- Diagnostics
+map('n', '[x', '<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic' })
+map('n', ']x', '<CMD>lua vim.lsp.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic' })

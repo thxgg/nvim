@@ -47,7 +47,8 @@ return {
             enable = true,
         },
         filters = {
-            custom = { '^.git$' }
+            custom = { '^.git$' },
+            exclude = { '.env.*' }
         },
     },
     config = function(_, opts)

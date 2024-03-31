@@ -15,7 +15,7 @@ return {
             lualine_a = { 'mode' },
             lualine_b = { 'filename', 'diagnostics' },
             lualine_c = { { 'aerial', sep = ' ❭ ' } },
-            lualine_x = { { 'fileformat', symbols = { unix = 'lf', dos = 'crlf', mac = 'cr' } },
+            lualine_x = { 'location', 'progress', { 'fileformat', symbols = { unix = 'lf', dos = 'crlf', mac = 'cr' } },
                 { 'filetype',   icons_enabled = false } },
             lualine_y = { { 'diff' } },
             lualine_z = { { 'b:gitsigns_head', icon = '' } }

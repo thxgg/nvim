@@ -2,12 +2,22 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         lazy = false,
-        tag = '0.1.4',
+        branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = {
+            defaults = {
+                path_display = { 'smart' },
+            },
             pickers = {
                 colorscheme = {
                     enable_preview = true
+                },
+                help_tags = {
+                    mappings = {
+                        i = {
+                            ["<CR>"] = "file_vsplit",
+                        },
+                    }
                 }
             },
         },
@@ -17,11 +27,6 @@ return {
             { '<leader>fb', '<CMD>Telescope current_buffer_fuzzy_find<CR>', desc = '[F]ind in [B]uffer' },
             { '<leader>/',  '<CMD>Telescope live_grep<CR>',                 desc = 'Search' },
             { '<leader>fg', '<CMD>Telescope grep_string<CR>',               desc = '[F]ind [G]rep' },
-            -- Git
-            { '<leader>gs', '<CMD>Telescope git_status<CR>',                desc = '[G]it [S]tatus' },
-            { '<leader>gb', '<CMD>Telescope git_branches<CR>',              desc = '[G]it [B]ranches' },
-            { '<leader>gc', '<CMD>Telescope git_commits<CR>',               desc = '[G]it [C]ommits' },
-            { '<leader>gC', '<CMD>Telescope git_bcommits<CR>',              desc = 'Git commits buffer' },
             -- Util
             { '<leader>?',  '<CMD>Telescope help_tags<CR>',                 desc = 'Help' },
             { '<leader>,',  '<CMD>Telescope keymaps<CR>',                   desc = 'Keymaps' },

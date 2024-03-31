@@ -15,19 +15,21 @@ return {
             map('n', '<F11>', dap.step_into, { desc = 'Step into' })
             map('n', '<F12>', dap.step_out, { desc = 'Step out' })
             map('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Toggle breakpoint' })
-            map('n', '<leader>dB', function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, { desc = 'Set conditional breakpoint' })
-            map('n', '<leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = 'Log point' })
+            map('n', '<leader>dB', function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+                { desc = 'Set conditional breakpoint' })
+            map('n', '<leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+                { desc = 'Log point' })
             map('n', '<leader>dr', dap.repl.open, { desc = 'Open REPL' })
         end
     },
     {
         'theHamsta/nvim-dap-virtual-text',
         dependencies = { 'mfussenegger/nvim-dap' },
-        opts = {}
+        config = true
     },
     {
         'rcarriga/nvim-dap-ui',
-        dependencies = { 'mfussenegger/nvim-dap' },
+        dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
         config = function()
             local dap = require('dap')
             local dapui = require('dapui')

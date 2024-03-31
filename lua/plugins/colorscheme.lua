@@ -11,7 +11,7 @@ return {
     },
     {
         'navarasu/onedark.nvim',
-        lazu = false,
+        lazy = false,
         priority = 1000,
         opts = {
             style = 'cool',
