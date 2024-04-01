@@ -391,6 +391,7 @@ return {
         opts = function(_, opts)
             local nls = require("null-ls")
             opts.sources = {
+                nls.builtins.formatting.shfmt,
                 nls.builtins.formatting.prettierd,
                 nls.builtins.formatting.google_java_format,
             }
