@@ -16,6 +16,7 @@ vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('Wqa', 'wqa', {})
 vim.api.nvim_create_user_command('Q', 'q', {})
 vim.api.nvim_create_user_command('Qa', 'qa', {})
+vim.api.nvim_create_user_command('Bd', 'bd', {})
 
 -- Resize with arrows
 map('n', '<C-Up>', ':resize -2<CR>', { desc = 'Decrease size by 2' })
