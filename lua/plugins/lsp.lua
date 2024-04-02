@@ -195,6 +195,13 @@ return {
                             pcall(vim.lsp.codelens.refresh)
                         end,
                     })
+
+                    -- Mappings
+                    map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show tooltip" })
+                    map("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Show signature help" })
+                    map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
+                    map("n", "<F3>", vim.lsp.buf.format, { buffer = bufnr, desc = "Format buffer" })
+                    map("n", "<F4>", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
                 end,
                 setting = {
                     java = {
