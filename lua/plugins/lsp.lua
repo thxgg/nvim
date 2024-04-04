@@ -176,11 +176,10 @@ return {
                 dap_main = {},
                 test = true,
                 on_attach = function(_, bufnr)
-                    -- Formatting and organizing imports
+                    -- Formatting
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true }),
                         callback = function()
-                            require("jdtls").organize_imports()
                             vim.lsp.buf.format()
                         end,
                     })
