@@ -126,6 +126,7 @@ return {
     },
     {
         "williamboman/mason.nvim",
+        build = ":MasonUpdate",
         config = true
     },
     -- Copied from LazyVim
