@@ -7,6 +7,7 @@ return {
         opts = {
             defaults = {
                 path_display = { 'smart' },
+                file_ignore_patterns = { '**/fonts' }
             },
             pickers = {
                 colorscheme = {
