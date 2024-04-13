@@ -3,7 +3,7 @@ return {
         'zbirenbaum/copilot.lua',
         cmd = 'Copilot',
         event = 'InsertEnter',
-        build = ':Copilot auth',
+        build = { ':Copilot authi', ':Copilot disable' },
         opts = {
             suggestion = { enabled = false },
             panel = { enabled = false },
