@@ -401,6 +401,9 @@ return {
                 nls.builtins.formatting.shfmt,
                 nls.builtins.formatting.prettierd,
                 nls.builtins.formatting.google_java_format,
+                nls.builtins.formatting.sqlfluff.with({
+                  extra_args = { "--dialect", "postgres" },
+                })
             }
         end,
     },
