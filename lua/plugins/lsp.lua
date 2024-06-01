@@ -109,7 +109,8 @@ return {
               plugins = {
                 {
                   name = "@vue/typescript-plugin",
-                  location = "/home/thxgg/.nvm/versions/node/v20.11.1//lib/node_modules/@vue/typescript-plugin",
+                  location =
+                  "/home/thxgg/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
                   languages = { "typescript", "javascript", "vue" },
                 },
               },
@@ -233,7 +234,7 @@ return {
             },
             inlayHints = {
               parameterNames = {
-                enabled = "all",                 -- literals, all, none
+                enabled = "all", -- literals, all, none
               },
             },
           },
