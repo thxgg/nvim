@@ -75,6 +75,32 @@ return {
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
           })
         end,
+        cssls = function()
+          require("lspconfig").cssls.setup({
+            on_attach = on_attach,
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            settings = {
+              css = {
+                validate = true,
+                lint = {
+                  unknownAtRules = "ignore"
+                }
+              },
+              scss = {
+                validate = true,
+                lint = {
+                  unknownAtRules = "ignore"
+                }
+              },
+              less = {
+                validate = true,
+                lint = {
+                  unknownAtRules = "ignore"
+                }
+              },
+            }
+          })
+        end,
         eslint = function()
           require("lspconfig").eslint.setup({
             on_attach = function(_, bufnr)
