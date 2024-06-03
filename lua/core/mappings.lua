@@ -1,8 +1,8 @@
 local map = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.noremap = mode ~= 't'
-    opts.silent = true
-    vim.keymap.set(mode, lhs, rhs, opts)
+  opts = opts or {}
+  opts.noremap = mode ~= 't'
+  opts.silent = true
+  vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 vim.g.mapleader = ' '
@@ -52,5 +52,5 @@ map('n', 'n', 'nzzzv', { desc = 'Recenter cursor after next lookup' })
 map('n', 'N', 'Nzzzv', { desc = 'Recenter cursor after previous lookup' })
 
 -- Diagnostics
-map('n', '[x', '<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic' })
-map('n', ']x', '<CMD>lua vim.lsp.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic' })
+map('n', '[x', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic' })
+map('n', ']x', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic' })
