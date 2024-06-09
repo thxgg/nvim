@@ -1,3 +1,22 @@
+local function filter(arr, fn)
+  if type(arr) ~= "table" then
+    return arr
+  end
+
+  local filtered = {}
+  for k, v in pairs(arr) do
+    if fn(v, k, arr) then
+      table.insert(filtered, v)
+    end
+  end
+
+  return filtered
+end
+
+local function filterVueDTS(value)
+  return string.match(value.targetUri, '%.d.ts') == nil
+end
+
 local map = function(mode, lhs, rhs, opts)
   opts = opts or {}
   opts.noremap = true
@@ -128,6 +147,10 @@ return {
           })
         end,
         tsserver = function()
+          local mason_registry = require('mason-registry')
+          local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() ..
+              '/node_modules/@vue/language-server'
+
           require("lspconfig").tsserver.setup({
             on_attach = on_attach,
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
@@ -135,9 +158,8 @@ return {
               plugins = {
                 {
                   name = "@vue/typescript-plugin",
-                  location =
-                  "/home/thxgg/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                  languages = { "typescript", "javascript", "vue" },
+                  location = vue_language_server_path,
+                  languages = { "vue" },
                 },
               },
             },
@@ -148,6 +170,12 @@ return {
             },
           })
         end,
+        volar = function()
+          require("lspconfig").volar.setup({
+            on_attach = on_attach,
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+          })
+        end
       },
     },
   },
