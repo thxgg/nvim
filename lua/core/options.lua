@@ -31,7 +31,7 @@ opt.tabstop = 4
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = true
-opt.wrapmargin = 2
+opt.wrapmargin = 0
 
 -- Right click mouse menu
 vim.cmd.aunmenu { 'PopUp.How-to\\ disable\\ mouse' }
