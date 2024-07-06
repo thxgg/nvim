@@ -181,7 +181,6 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    build = ":MasonUpdate",
     config = true
   },
   -- Copied from LazyVim
@@ -241,10 +240,9 @@ return {
           })
 
           -- Codelens
-          pcall(vim.lsp.codelens.refresh)
-
-          vim.api.nvim_create_autocmd("BufWritePost", {
+          vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
             buffer = bufnr,
+            pattern = "java",
             desc = "refresh codelens",
             callback = function()
               pcall(vim.lsp.codelens.refresh)
@@ -270,11 +268,6 @@ return {
                   name = "JavaSE-17",
                   path = vim.fn.expand("/usr/lib/jvm/java-17-openjdk"),
                 },
-                -- Still waiting for Java 21 support
-                -- {
-                --     name = 'JavaSE-21',
-                --     path = vim.fn.expand('/usr/lib/jvm/java-21-openjdk'),
-                -- },
               },
             },
             maven = {
@@ -287,9 +280,7 @@ return {
               enabled = true,
             },
             inlayHints = {
-              parameterNames = {
-                enabled = "all", -- literals, all, none
-              },
+              enabled = "all"
             },
           },
           signatureHelp = {
@@ -297,13 +288,11 @@ return {
           },
           completion = {
             favoriteStaticMembers = {
-              "org.hamcrest.MatcherAssert.assertThat",
-              "org.hamcrest.Matchers.*",
-              "org.hamcrest.CoreMatchers.*",
-              "org.junit.jupiter.api.Assertions.*",
-              "java.util.Objects.requireNonNull",
-              "java.util.Objects.requireNonNullElse",
+              "org.springframework.http.HttpStatus.*",
               "org.mockito.Mockito.*",
+              "org.mockito.ArgumentMatchers.*",
+              "org.junit.jupiter.api.Assertions.*",
+              "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*"
             },
           },
           contentProvider = {
