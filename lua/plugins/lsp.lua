@@ -28,7 +28,13 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true }),
     callback = function()
-      vim.lsp.buf.format()
+      -- Run EsLintFixAll for js, ts, tsx and vue files
+      local ft = vim.api.nvim_buf_get_option(0, "filetype")
+      if ft == "javascript" or ft == "typescript" or ft == "typescriptreact" or ft == "vue" then
+        vim.cmd("EslintFixAll")
+      else
+        vim.lsp.buf.format()
+      end
     end,
   })
 
@@ -382,28 +388,67 @@ return {
           if client and client.name == "jdtls" then
             local wk = require("which-key")
             wk.register({
-              ["<leader>r"] = { name = "+refactor" },
-              ["<leader>rx"] = { name = "+extract" },
-              ["<leader>rxv"] = { require("jdtls").extract_variable_all, "E[x]tract [V]ariable" },
-              ["<leader>rxc"] = { require("jdtls").extract_constant, "E[x]tract [C]onstant" },
-              ["<leader>roi"] = { require("jdtls").organize_imports, "[O]rganize [I]mports" },
-            }, { mode = "n", buffer = args.buf })
+              { "<leader>r",  mode = "n", buffer = args.buf, name = "+refactor" },
+              { "<leader>rx", mode = "n", buffer = args.buf, name = "+extract" },
+              {
+                "<leader>rxv",
+                function()
+                  require("jdtls").extract_variable_all()
+                end,
+                mode = "n",
+                buffer = args.buf,
+                desc = "E[x]tract [V]ariable"
+              },
+              {
+                "<leader>rxc",
+                function()
+                  require("jdtls").extract_constant()
+                end,
+                mode = "n",
+                buffer = args.buf,
+                desc = "E[x]tract [C]onstant"
+              },
+              {
+                "<leader>roi",
+                function()
+                  require("jdtls").organize_imports()
+                end,
+                mode = "n",
+                buffer = args.buf,
+                desc = "[O]rganize [I]mports"
+              },
+            })
             wk.register({
-              ["<leader>r"] = { name = "+refactor" },
-              ["<leader>rx"] = { name = "+extract" },
-              ["<leader>rxm"] = {
-                [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-                "E[x]tract [M]ethod",
+              { "<leader>r",  mode = "v", buffer = args.buf, name = "+refactor" },
+              { "<leader>rx", mode = "v", buffer = args.buf, name = "+extract" },
+              {
+                "<leader>rxm",
+                function()
+                  require('jdtls').extract_method(true)
+                end,
+                mode = "v",
+                buffer = args.buf,
+                desc = "E{x]tract [M]ethod",
               },
-              ["<leader>rxv"] = {
-                [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
-                "E[x]tract [V]ariable",
+              {
+                "<leader>rxv",
+                function()
+                  require('jdtls').extract_variable_all(true)
+                end,
+                mode = "v",
+                buffer = args.buf,
+                desc = "E{x]tract [V]ariable",
               },
-              ["<leader>rxc"] = {
-                [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
-                "E[x]tract [C]onstant",
+              {
+                "<leader>rxc",
+                function()
+                  require('jdtls').extract_constant(true)
+                end,
+                mode = "v",
+                buffer = args.buf,
+                desc = "E{x]tract [C]onstant",
               },
-            }, { mode = "v", buffer = args.buf })
+            })
 
             if opts.dap and mason_registry.is_installed("java-debug-adapter") then
               -- custom init for Java debugger
@@ -414,14 +459,35 @@ return {
               if opts.test and mason_registry.is_installed("java-test") then
                 -- custom keymaps for Java test runner (not yet compatible with neotest)
                 wk.register({
-                  ["<leader>t"] = { name = "+test" },
-                  ["<leader>tT"] = { require("jdtls.dap").test_class, "Run All [T]est" },
-                  ["<leader>tn"] = {
-                    require("jdtls.dap").test_nearest_method,
-                    "Run [N]earest [T]est",
+                  { "<leader>t", mode = "n", buffer = args.buf, group = "+test" },
+                  {
+                    "<leader>tT",
+                    function()
+                      require("jdtls.dap").test_class()
+                    end,
+                    mode = "n",
+                    buffer = args.buf,
+                    desc = "Run All [T]est"
                   },
-                  ["<leader>tt"] = { require("jdtls.dap").pick_test, "Run [T]est" },
-                }, { mode = "n", buffer = args.buf })
+                  {
+                    "<leader>tn",
+                    function()
+                      require("jdtls.dap").test_nearest_method()
+                    end,
+                    mode = "n",
+                    buffer = args.buf,
+                    desc = "Run [N]earest [T]est",
+                  },
+                  {
+                    "<leader>tt",
+                    function()
+                      require("jdtls.dap").pick_test()
+                    end,
+                    mode = "n",
+                    buffer = args.buf,
+                    desc = "Run [T]est"
+                  },
+                })
               end
             end
 

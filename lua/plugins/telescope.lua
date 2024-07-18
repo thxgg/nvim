@@ -17,7 +17,6 @@ return {
           mappings = {
             i = {
               ["<CR>"] = "file_vsplit",
-              ["<C-s>"] = "file_split"
             },
           }
         }
