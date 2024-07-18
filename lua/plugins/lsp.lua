@@ -297,6 +297,7 @@ return {
               "org.springframework.http.HttpStatus.*",
               "org.mockito.Mockito.*",
               "org.mockito.ArgumentMatchers.*",
+              "org.mockito.AdditionalMatchers.*",
               "org.junit.jupiter.api.Assertions.*",
               "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*"
             },
