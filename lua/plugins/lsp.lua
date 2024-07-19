@@ -1,22 +1,3 @@
-local function filter(arr, fn)
-  if type(arr) ~= "table" then
-    return arr
-  end
-
-  local filtered = {}
-  for k, v in pairs(arr) do
-    if fn(v, k, arr) then
-      table.insert(filtered, v)
-    end
-  end
-
-  return filtered
-end
-
-local function filterVueDTS(value)
-  return string.match(value.targetUri, "%.d.ts") == nil
-end
-
 local map = function(mode, lhs, rhs, opts)
   opts = opts or {}
   opts.noremap = true
@@ -500,7 +481,6 @@ return {
       opts.sources = {
         -- Diagnostics
         require("none-ls.diagnostics.eslint"),
-        nls.builtins.diagnostics.markdownlint,
 
         -- Formatting
         require("none-ls.formatting.eslint"),
@@ -509,8 +489,6 @@ return {
         nls.builtins.formatting.sqlfluff.with({
           extra_args = { "--dialect", "postgres" },
         }),
-        nls.builtins.formatting.stylua,
-        nls.builtins.formatting.markdownlint,
 
         -- Code Actions
         require("none-ls.code_actions.eslint"),

@@ -18,5 +18,5 @@ return {
     { "<leader>gtd", vim.lsp.buf.type_definitions,           desc = "[G]o to [T]ype [D]efinition" },
     { "<leader>gr",  "<CMD>Trouble lsp_references<CR>",      desc = "[G]o to [R]eferences" },
     { "<leader>gi",  "<CMD>Trouble lsp_implementations<CR>", desc = "[G]o to [I]mplementations" },
-  },
+  }
 }
