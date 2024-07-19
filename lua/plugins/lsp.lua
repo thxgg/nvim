@@ -14,7 +14,7 @@ local function filter(arr, fn)
 end
 
 local function filterVueDTS(value)
-  return string.match(value.targetUri, '%.d.ts') == nil
+  return string.match(value.targetUri, "%.d.ts") == nil
 end
 
 local map = function(mode, lhs, rhs, opts)
@@ -24,19 +24,23 @@ local map = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local on_attach = function(_, bufnr)
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true }),
-    callback = function()
-      -- Run EsLintFixAll for js, ts, tsx and vue files
-      local ft = vim.api.nvim_buf_get_option(0, "filetype")
-      if ft == "javascript" or ft == "typescript" or ft == "typescriptreact" or ft == "vue" then
-        vim.cmd("EslintFixAll")
-      else
-        vim.lsp.buf.format()
-      end
-    end,
-  })
+local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
+local on_attach = function(client, bufnr)
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        local eslint_client = next(vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" })) ~= nil
+        if eslint_client then
+          vim.cmd("EslintFixAll")
+        else
+          vim.lsp.buf.format({ async = false })
+        end
+      end,
+    })
+  end
 
   map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show tooltip" })
   map("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Show signature help" })
@@ -85,7 +89,6 @@ return {
         "jdtls",
         "lemminx",
         "lua_ls",
-        "marksman",
         "spectral",
         "sqlls",
         "tailwindcss",
@@ -108,34 +111,22 @@ return {
               css = {
                 validate = true,
                 lint = {
-                  unknownAtRules = "ignore"
-                }
+                  unknownAtRules = "ignore",
+                },
               },
               scss = {
                 validate = true,
                 lint = {
-                  unknownAtRules = "ignore"
-                }
+                  unknownAtRules = "ignore",
+                },
               },
               less = {
                 validate = true,
                 lint = {
-                  unknownAtRules = "ignore"
-                }
+                  unknownAtRules = "ignore",
+                },
               },
-            }
-          })
-        end,
-        eslint = function()
-          require("lspconfig").eslint.setup({
-            on_attach = function(_, bufnr)
-              vim.api.nvim_create_autocmd("BufWritePre", {
-                group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true }),
-                buffer = bufnr,
-                command = "EslintFixAll",
-              })
-            end,
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            },
           })
         end,
         jdtls = function() end,
@@ -153,9 +144,10 @@ return {
           })
         end,
         tsserver = function()
-          local mason_registry = require('mason-registry')
-          local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() ..
-              '/node_modules/@vue/language-server'
+          local mason_registry = require("mason-registry")
+          local vue_language_server_path = mason_registry
+              .get_package("vue-language-server")
+              :get_install_path() .. "/node_modules/@vue/language-server"
 
           require("lspconfig").tsserver.setup({
             on_attach = on_attach,
@@ -176,18 +168,12 @@ return {
             },
           })
         end,
-        volar = function()
-          require("lspconfig").volar.setup({
-            on_attach = on_attach,
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-          })
-        end
       },
     },
   },
   {
     "williamboman/mason.nvim",
-    config = true
+    config = true,
   },
   -- Copied from LazyVim
   {
@@ -286,7 +272,7 @@ return {
               enabled = true,
             },
             inlayHints = {
-              enabled = "all"
+              enabled = "all",
             },
           },
           signatureHelp = {
@@ -299,7 +285,7 @@ return {
               "org.mockito.ArgumentMatchers.*",
               "org.mockito.AdditionalMatchers.*",
               "org.junit.jupiter.api.Assertions.*",
-              "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*"
+              "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
             },
           },
           contentProvider = {
@@ -398,7 +384,7 @@ return {
                 end,
                 mode = "n",
                 buffer = args.buf,
-                desc = "E[x]tract [V]ariable"
+                desc = "E[x]tract [V]ariable",
               },
               {
                 "<leader>rxc",
@@ -407,7 +393,7 @@ return {
                 end,
                 mode = "n",
                 buffer = args.buf,
-                desc = "E[x]tract [C]onstant"
+                desc = "E[x]tract [C]onstant",
               },
               {
                 "<leader>roi",
@@ -416,7 +402,7 @@ return {
                 end,
                 mode = "n",
                 buffer = args.buf,
-                desc = "[O]rganize [I]mports"
+                desc = "[O]rganize [I]mports",
               },
             })
             wk.register({
@@ -425,7 +411,7 @@ return {
               {
                 "<leader>rxm",
                 function()
-                  require('jdtls').extract_method(true)
+                  require("jdtls").extract_method(true)
                 end,
                 mode = "v",
                 buffer = args.buf,
@@ -434,7 +420,7 @@ return {
               {
                 "<leader>rxv",
                 function()
-                  require('jdtls').extract_variable_all(true)
+                  require("jdtls").extract_variable_all(true)
                 end,
                 mode = "v",
                 buffer = args.buf,
@@ -443,7 +429,7 @@ return {
               {
                 "<leader>rxc",
                 function()
-                  require('jdtls').extract_constant(true)
+                  require("jdtls").extract_constant(true)
                 end,
                 mode = "v",
                 buffer = args.buf,
@@ -468,7 +454,7 @@ return {
                     end,
                     mode = "n",
                     buffer = args.buf,
-                    desc = "Run All [T]est"
+                    desc = "Run All [T]est",
                   },
                   {
                     "<leader>tn",
@@ -486,7 +472,7 @@ return {
                     end,
                     mode = "n",
                     buffer = args.buf,
-                    desc = "Run [T]est"
+                    desc = "Run [T]est",
                   },
                 })
               end
@@ -506,22 +492,35 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
     opts = function(_, opts)
       local nls = require("null-ls")
       opts.sources = {
+        -- Diagnostics
+        require("none-ls.diagnostics.eslint"),
+        nls.builtins.diagnostics.markdownlint,
+
+        -- Formatting
+        require("none-ls.formatting.eslint"),
         nls.builtins.formatting.shfmt,
-        nls.builtins.formatting.prettierd,
         nls.builtins.formatting.google_java_format,
         nls.builtins.formatting.sqlfluff.with({
           extra_args = { "--dialect", "postgres" },
-        })
+        }),
+        nls.builtins.formatting.stylua,
+        nls.builtins.formatting.markdownlint,
+
+        -- Code Actions
+        require("none-ls.code_actions.eslint"),
       }
     end,
   },
   {
-    'laytan/tailwind-sorter.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
-    build = 'cd formatter && npm ci && npm run build',
+    "laytan/tailwind-sorter.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
+    build = "cd formatter && npm ci && npm run build",
     config = true,
-  }
+  },
 }

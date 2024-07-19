@@ -1,42 +1,50 @@
 return {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-        signs = {
-            add          = { text = '+' },
-            change       = { text = '~' },
-            delete       = { text = '-' },
-            topdelete    = { text = '-' },
-            changedelete = { text = '~' },
-            untracked    = { text = '┆' },
-        },
-        on_attach = function(bufnr)
-            local gs = package.loaded.gitsigns
+  "lewis6991/gitsigns.nvim",
+  opts = {
+    signs = {
+      add = { text = "+" },
+      change = { text = "~" },
+      delete = { text = "-" },
+      topdelete = { text = "-" },
+      changedelete = { text = "~" },
+      untracked = { text = "┆" },
+    },
+    on_attach = function(bufnr)
+      local gs = package.loaded.gitsigns
 
-            local function map(mode, l, r, opts)
-                opts = opts or {}
-                opts.buffer = bufnr
-                vim.keymap.set(mode, l, r, opts)
-            end
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
 
-            -- Navigation
-            map('n', ']g', function()
-                if vim.wo.diff then return ']g' end
-                vim.schedule(function() gs.next_hunk() end)
-                return '<Ignore>'
-            end, { expr = true })
-
-            map('n', '[g', function()
-                if vim.wo.diff then return '[g' end
-                vim.schedule(function() gs.prev_hunk() end)
-                return '<Ignore>'
-            end, { expr = true })
-
-            -- Actions
-            map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = '[G]it [B]lame' })
-            map('n', '<leader>gD', gs.diffthis, { desc = '[G]it [D]iff' })
-            map('n', '<leader>gp', gs.preview_hunk, { desc = '[G]it [P]review' })
-            map('n', '<leader>gP', gs.preview_hunk_inline, { desc = '[G]it [P]review Inline' })
-            map('n', '<leader>gl', gs.setqflist, { desc = '[G]it [L]ist Hunks' })
+      -- Navigation
+      map("n", "]g", function()
+        if vim.wo.diff then
+          return "]g"
         end
-    }
+        vim.schedule(function()
+          gs.next_hunk()
+        end)
+        return "<Ignore>"
+      end, { expr = true })
+
+      map("n", "[g", function()
+        if vim.wo.diff then
+          return "[g"
+        end
+        vim.schedule(function()
+          gs.prev_hunk()
+        end)
+        return "<Ignore>"
+      end, { expr = true })
+
+      -- Actions
+      map("n", "<leader>gb", gs.toggle_current_line_blame, { desc = "[G]it [B]lame" })
+      map("n", "<leader>gD", gs.diffthis, { desc = "[G]it [D]iff" })
+      map("n", "<leader>gp", gs.preview_hunk, { desc = "[G]it [P]review" })
+      map("n", "<leader>gP", gs.preview_hunk_inline, { desc = "[G]it [P]review Inline" })
+      map("n", "<leader>gl", gs.setqflist, { desc = "[G]it [L]ist Hunks" })
+    end,
+  },
 }
