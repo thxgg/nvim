@@ -14,7 +14,7 @@ return {
     sections = {
       lualine_a = { "mode" },
       lualine_b = { "filename", "diagnostics" },
-      lualine_c = { { "aerial", sep = " ❭ " } },
+      -- lualine_c = { { "aerial", sep = " ❭ " } },
       lualine_x = {
         "location",
         "progress",

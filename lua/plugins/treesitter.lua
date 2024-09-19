@@ -76,8 +76,8 @@ return {
             },
             selection_modes = {
               ["@parameter.outer"] = "v", -- charwise
-              ["@function.outer"] = "V", -- linewise
-              ["@class.outer"] = "V", -- linewise
+              ["@function.outer"] = "V",  -- linewise
+              ["@class.outer"] = "V",     -- linewise
             },
           },
           move = {

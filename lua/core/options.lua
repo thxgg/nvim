@@ -14,7 +14,7 @@ opt.incsearch = true
 opt.isfname:append("@-@")
 opt.linebreak = true
 opt.list = true
--- opt.listchars = "tab:» ,eol:↲,trail:-"
+opt.listchars = "tab:» ,eol:↲,trail:-"
 opt.listchars = "tab:» ,trail:-"
 opt.number = true
 opt.relativenumber = false

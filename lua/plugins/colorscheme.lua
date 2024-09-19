@@ -43,7 +43,7 @@ return {
       sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
       sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
-      vim.opt.background = "light"
+      vim.opt.background = "dark"
       vim.cmd.colorscheme("catppuccin")
     end,
   },

@@ -8,6 +8,9 @@ return {
       suggestion = { enabled = false },
       panel = { enabled = false },
     },
+    keys = {
+      { "n", "<leader>cpt", "<CMD>Copilot toggle<CR>", desc = "[T]oggle [C]o[p]ilot" }
+    },
   },
   {
     "jonahgoldwastaken/copilot-status.nvim",
