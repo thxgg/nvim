@@ -13,10 +13,10 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>xd", "<CMD>Trouble diagnostics<CR>", desc = "Diagnostics" },
-		{ "<leader>gd", vim.lsp.buf.definition, desc = "[G]o to [D]efinition" },
-		{ "<leader>gtd", vim.lsp.buf.type_definitions, desc = "[G]o to [T]ype [D]efinition" },
-		{ "<leader>gr", vim.lsp.buf.references, desc = "[G]o to [R]eferences" },
-		{ "<leader>gi", vim.lsp.buf.implementation, desc = "[G]o to [I]mplementations" },
+		{ "<leader>xd", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostics" },
+		{ "<leader>gd", "<CMD>Telescope lsp_definitions<CR>", desc = "[G]o to [D]efinition" },
+		{ "<leader>gtd", "<CMD>Telescope lsp_type_definitions<CR>", desc = "[G]o to [T]ype [D]efinition" },
+		{ "<leader>gr", "<CMD>Telescope lsp_references<CR>", desc = "[G]o to [R]eferences" },
+		{ "<leader>gi", "<CMD>Telescope lsp_implementations<CR>", desc = "[G]o to [I]mplementations" },
 	},
 }

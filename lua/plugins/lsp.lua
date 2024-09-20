@@ -17,14 +17,14 @@ local on_attach = function(client, bufnr)
 				if eslint_client then
 					vim.cmd("EslintFixAll")
 				else
-					vim.lsp.buf.format(vim.lsp.buf.format({
+					vim.lsp.buf.format({
 						filter = function(c)
 							-- apply whatever logic you want (in this example, we'll only use null-ls)
 							return c.name == "null-ls"
 						end,
 						bufnr = bufnr,
 						async = false,
-					}))
+					})
 				end
 			end,
 		})
@@ -474,6 +474,28 @@ return {
 
 			-- Avoid race condition by calling attach the first time, since the autocmd won't fire.
 			attach_jdtls()
+
+			-- Setup SonarLint
+			require("sonarlint").setup({
+				server = {
+					cmd = {
+						"sonarlint-language-server",
+						-- Ensure that sonarlint-language-server uses stdio channel
+						"-stdio",
+						"-analyzers",
+						-- paths to the analyzers you need, using those for python and java in this example
+						vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+						vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+						vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
+					},
+				},
+				filetypes = {
+					-- Tested and working
+					"python",
+					"cpp",
+					"java",
+				},
+			})
 		end,
 	},
 	{
