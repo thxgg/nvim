@@ -1,6 +1,6 @@
 return {
-  {
-    "folke/twilight.nvim",
-    config = true,
-  },
+	{
+		"folke/twilight.nvim",
+		config = true,
+	},
 }
