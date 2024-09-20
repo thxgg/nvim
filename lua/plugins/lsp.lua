@@ -363,67 +363,56 @@ return {
 					if client and client.name == "jdtls" then
 						local wk = require("which-key")
 						wk.register({
-							{ "<leader>r", mode = "n", buffer = args.buf, name = "+refactor" },
-							{ "<leader>rx", mode = "n", buffer = args.buf, name = "+extract" },
-							{
-								"<leader>rxv",
+							["<leader>r"] = { name = "+refactor" },
+							["<leader>rx"] = { name = "+extract" },
+
+							["<leader>rxv"] = {
 								function()
 									require("jdtls").extract_variable_all()
 								end,
-								mode = "n",
-								buffer = args.buf,
 								desc = "E[x]tract [V]ariable",
 							},
-							{
-								"<leader>rxc",
+
+							["<leader>rxc"] = {
 								function()
 									require("jdtls").extract_constant()
 								end,
-								mode = "n",
-								buffer = args.buf,
 								desc = "E[x]tract [C]onstant",
 							},
-							{
-								"<leader>roi",
+
+							["<leader>roi"] = {
 								function()
 									require("jdtls").organize_imports()
 								end,
-								mode = "n",
-								buffer = args.buf,
 								desc = "[O]rganize [I]mports",
 							},
-						})
+						}, { mode = "n", buffer = args.buf })
+
 						wk.register({
-							{ "<leader>r", mode = "v", buffer = args.buf, name = "+refactor" },
-							{ "<leader>rx", mode = "v", buffer = args.buf, name = "+extract" },
-							{
-								"<leader>rxm",
+							["<leader>r"] = { name = "+refactor" },
+							["<leader>rx"] = { name = "+extract" },
+
+							["<leader>rxm"] = {
 								function()
 									require("jdtls").extract_method(true)
 								end,
-								mode = "v",
-								buffer = args.buf,
 								desc = "E{x]tract [M]ethod",
 							},
-							{
-								"<leader>rxv",
+
+							["<leader>rxv"] = {
 								function()
 									require("jdtls").extract_variable_all(true)
 								end,
-								mode = "v",
-								buffer = args.buf,
 								desc = "E{x]tract [V]ariable",
 							},
-							{
-								"<leader>rxc",
+
+							["<leader>rxc"] = {
 								function()
 									require("jdtls").extract_constant(true)
 								end,
-								mode = "v",
-								buffer = args.buf,
 								desc = "E{x]tract [C]onstant",
 							},
-						})
+						}, { mode = "v", buffer = args.buf })
 
 						if opts.dap and mason_registry.is_installed("java-debug-adapter") then
 							-- custom init for Java debugger
