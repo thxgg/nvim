@@ -273,6 +273,7 @@ return {
 							"org.mockito.ArgumentMatchers.*",
 							"org.mockito.AdditionalMatchers.*",
 							"org.junit.jupiter.api.Assertions.*",
+							"org.assertj.core.api.Assertions.*",
 							"org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
 						},
 					},
@@ -505,6 +506,9 @@ return {
 				nls.builtins.formatting.stylua,
 				nls.builtins.formatting.sqlfluff.with({
 					extra_args = { "--dialect", "postgres" },
+				}),
+				nls.builtins.formatting.npm_groovy_lint.with({
+					filetypes = { "groovy" },
 				}),
 
 				-- Code Actions
