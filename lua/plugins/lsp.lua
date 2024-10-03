@@ -172,7 +172,7 @@ return {
 			return {
 				-- How to find the root dir for a given filename. The default comes from
 				-- lspconfig which provides a function specifically for java projects.
-				root_dir = require("lspconfig.server_configurations.jdtls").default_config.root_dir,
+				root_dir = require("lspconfig.configs.jdtls").default_config.root_dir,
 
 				-- How to find the project name for a given root dir.
 				project_name = function(root_dir)
@@ -488,7 +488,7 @@ return {
 				-- Diagnostics
 				require("none-ls.diagnostics.eslint"),
 				nls.builtins.diagnostics.commitlint,
-				nls.builtins.diagnostics.editorconfig_checker,
+				-- nls.builtins.diagnostics.editorconfig_checker,
 				nls.builtins.diagnostics.markdownlint,
 				nls.builtins.diagnostics.spectral,
 				nls.builtins.diagnostics.sqlfluff.with({
@@ -549,6 +549,9 @@ return {
 			},
 			filetypes = {
 				"java",
+				"typescript",
+				"javascript",
+				"vue",
 			},
 		},
 	},
