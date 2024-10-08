@@ -51,6 +51,7 @@ return {
 					"java",
 					"rust",
 					"sql",
+					"python",
 				},
 				sync_install = false,
 				highlight = {
