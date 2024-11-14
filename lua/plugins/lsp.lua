@@ -23,7 +23,6 @@ local on_attach = function(client, bufnr)
 				else
 					vim.lsp.buf.format({
 						filter = function(c)
-							-- apply whatever logic you want (in this example, we'll only use null-ls)
 							return c.name == "null-ls"
 						end,
 						bufnr = bufnr,
@@ -37,7 +36,19 @@ local on_attach = function(client, bufnr)
 	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show tooltip" })
 	map("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Show signature help" })
 	map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
-	map("n", "<F3>", vim.lsp.buf.format, { buffer = bufnr, desc = "Format buffer" })
+	map("n", "<F3>", function()
+		local eslint_client = next(vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" })) ~= nil
+		if eslint_client then
+			vim.cmd("EslintFixAll")
+		else
+			vim.lsp.buf.format({
+				filter = function(c)
+					return c.name == "null-ls"
+				end,
+				bufnr = bufnr,
+			})
+		end
+	end, { buffer = bufnr, desc = "Format buffer" })
 	map("n", "<F4>", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
 end
 
@@ -166,7 +177,7 @@ return {
 	},
 	{
 		"williamboman/mason.nvim",
-		config = true,
+		opts = {},
 	},
 	-- Copied from LazyVim
 	{
@@ -216,23 +227,16 @@ return {
 				dap_main = {},
 				test = true,
 				on_attach = function(_, bufnr)
-					-- Formatting
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true }),
-						callback = function()
-							vim.lsp.buf.format()
-						end,
-					})
-
 					-- Codelens
 					vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+						group = vim.api.nvim_create_augroup("JdtlsCodelens", { clear = true }),
 						buffer = bufnr,
-						pattern = "java",
-						desc = "refresh codelens",
 						callback = function()
-							pcall(vim.lsp.codelens.refresh)
+							vim.lsp.codelens.refresh()
 						end,
 					})
+					-- Initial codelens refresh
+					vim.lsp.codelens.refresh()
 
 					-- Mappings
 					map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show tooltip" })
@@ -251,8 +255,21 @@ return {
 							runtimes = {
 								{
 									name = "JavaSE-17",
-									path = vim.fn.expand("/usr/lib/jvm/java-17-openjdk"),
+									path = vim.fn.expand(
+										"/Users/thxgg/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home"
+									),
 								},
+								{
+									name = "JavaSE-21",
+									path = vim.fn.expand(
+										"/Users/thxgg/Library/Java/JavaVirtualMachines/corretto-21.0.5/Contents/Home"
+									),
+								},
+								-- Java 23 is not supported by JDTLS yet
+								-- {
+								--   name = "JavaSE-23",
+								--   path = vim.fn.expand("/Users/thxgg/Library/Java/JavaVirtualMachines/corretto-23.0.1/Contents/Home"),
+								-- }
 							},
 						},
 						maven = {
@@ -264,39 +281,58 @@ return {
 						referencesCodeLens = {
 							enabled = true,
 						},
+						references = {
+							includeAccessors = true,
+						},
 						inlayHints = {
-							enabled = "all",
+							paramerNames = {
+								enabled = "all",
+							},
 						},
-					},
-					signatureHelp = {
-						enabled = true,
-					},
-					completion = {
-						favoriteStaticMembers = {
-							"org.springframework.http.HttpStatus.*",
-							"org.mockito.Mockito.*",
-							"org.mockito.ArgumentMatchers.*",
-							"org.mockito.AdditionalMatchers.*",
-							"org.junit.jupiter.api.Assertions.*",
-							"org.assertj.core.api.Assertions.*",
-							"org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
+						signatureHelp = {
+							enabled = true,
 						},
-					},
-					contentProvider = {
-						preferred = "fernflower",
-					},
-					extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
-					sources = {
-						organizeImports = {
-							starThreshold = 9999,
-							staticStarThreshold = 9999,
+						completion = {
+							enabled = true,
+							favoriteStaticMembers = {
+								"org.springframework.http.HttpStatus.*",
+								"org.mockito.Mockito.*",
+								"org.mockito.ArgumentMatchers.*",
+								"org.mockito.AdditionalMatchers.*",
+								"org.junit.jupiter.api.Assertions.*",
+								"org.assertj.core.api.Assertions.*",
+								"org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
+							},
+							importOrder = {
+								"java",
+								"javax",
+								"com",
+								"org",
+							},
 						},
-					},
-					codeGeneration = {
-						toString = {
-							template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+						jdt = {
+							ls = {
+								lombokSupport = {
+									enabled = true,
+								},
+							},
 						},
-						useBlocks = true,
+						contentProvider = {
+							preferred = "fernflower",
+						},
+						extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
+						sources = {
+							organizeImports = {
+								starThreshold = 9999,
+								staticStarThreshold = 9999,
+							},
+						},
+						codeGeneration = {
+							toString = {
+								template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+							},
+							useBlocks = true,
+						},
 					},
 				},
 				jdtls = function(opts)
@@ -437,36 +473,36 @@ return {
 							-- Java Test require Java debugger to work
 							if opts.test and mason_registry.is_installed("java-test") then
 								-- custom keymaps for Java test runner (not yet compatible with neotest)
-								-- wk.register({
-								-- 	{ "<leader>t", mode = "n", buffer = args.buf, group = "+test" },
-								-- 	{
-								-- 		"<leader>tT",
-								-- 		function()
-								-- 			require("jdtls.dap").test_class()
-								-- 		end,
-								-- 		mode = "n",
-								-- 		buffer = args.buf,
-								-- 		desc = "Run All [T]est",
-								-- 	},
-								-- 	{
-								-- 		"<leader>tn",
-								-- 		function()
-								-- 			require("jdtls.dap").test_nearest_method()
-								-- 		end,
-								-- 		mode = "n",
-								-- 		buffer = args.buf,
-								-- 		desc = "Run [N]earest [T]est",
-								-- 	},
-								-- 	{
-								-- 		"<leader>tt",
-								-- 		function()
-								-- 			require("jdtls.dap").pick_test()
-								-- 		end,
-								-- 		mode = "n",
-								-- 		buffer = args.buf,
-								-- 		desc = "Run [T]est",
-								-- 	},
-								-- })
+								wk.register({
+									{ "<leader>t", mode = "n", buffer = args.buf, group = "+test" },
+									{
+										"<leader>tT",
+										function()
+											require("jdtls.dap").test_class()
+										end,
+										mode = "n",
+										buffer = args.buf,
+										desc = "Run All [T]est",
+									},
+									{
+										"<leader>tn",
+										function()
+											require("jdtls.dap").test_nearest_method()
+										end,
+										mode = "n",
+										buffer = args.buf,
+										desc = "Run [N]earest [T]est",
+									},
+									{
+										"<leader>tt",
+										function()
+											require("jdtls.dap").pick_test()
+										end,
+										mode = "n",
+										buffer = args.buf,
+										desc = "Run [T]est",
+									},
+								})
 							end
 						end
 

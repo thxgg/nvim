@@ -52,6 +52,32 @@
     ],
     "description": "Base for Vue 3 File with <script setup>, TypeScript and CSS"
   },
+  "Vue <template>": {
+    "prefix": "vtemplate",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "\t\t{0}",
+      "\t</div>",
+      "</template>"
+    ]
+  },
+  "Vue <script setup lang=\"ts\"": {
+    "prefix": "vscript",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "{0}",
+      "</script>"
+    ]
+  },
+  "Vue <style lang=\"scss\" scoped>": {
+    "prefix": "vstyle",
+    "body": [
+      "<style lang=\"scss\" scoped>",
+      "{0}",
+      "</style>"
+    ]
+  },
   "Vue v-for": {
     "prefix": "vfor",
     "body": [

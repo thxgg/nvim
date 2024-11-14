@@ -24,9 +24,8 @@ return {
 				["<C-e>"] = cmp.mapping.close(),
 				["<C-y>"] = cmp.mapping.confirm({
 					behavior = cmp.ConfirmBehavior.Replace,
-					select = false,
+					select = true,
 				}),
-				["<C-Space>"] = cmp.mapping.complete(),
 			})
 			opts.formatting = {
 				format = require("lspkind").cmp_format({
@@ -34,12 +33,12 @@ return {
 					menu = {
 						buffer = "[Buf]",
 						nvim_lsp = "[LSP]",
-						nvim_lua = "[API]",
+						nvim_lua = "[Lua]",
 						path = "[Path]",
 						luasnip = "[Snip]",
-						copilot = "[Copilot]",
+						copilot = "[AI]",
 					},
-					symbol_map = { Copilot = "" },
+					symbol_map = { Copilot = "" },
 				}),
 			}
 			opts.sources = {

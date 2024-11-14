@@ -3,7 +3,7 @@ return {
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 		event = "InsertEnter",
-		build = { ":Copilot authi", ":Copilot disable" },
+		build = { ":Copilot auth", ":Copilot disable" },
 		opts = {
 			suggestion = { enabled = false },
 			panel = { enabled = false },
@@ -11,6 +11,10 @@ return {
 		keys = {
 			{ "<leader>cpt", "<CMD>Copilot toggle<CR>", desc = "[T]oggle [C]o[p]ilot" },
 		},
+		init = function()
+			-- Disable Copilot by default
+			vim.cmd("Copilot disable")
+		end,
 	},
 	{
 		"jonahgoldwastaken/copilot-status.nvim",
@@ -30,6 +34,6 @@ return {
 	{
 		"zbirenbaum/copilot-cmp",
 		dependencies = { "zbirenbaum/copilot.lua" },
-		config = true,
+		opts = {},
 	},
 }

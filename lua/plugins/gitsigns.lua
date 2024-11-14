@@ -9,6 +9,10 @@ return {
 			changedelete = { text = "~" },
 			untracked = { text = "┆" },
 		},
+		current_line_blame = true,
+		current_line_blame_opts = {
+			virt_text_priority = 9999,
+		},
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
 

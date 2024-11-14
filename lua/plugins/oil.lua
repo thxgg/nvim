@@ -4,7 +4,7 @@ return {
 	opts = {
 		delete_to_trash = true,
 		skip_confirm_for_simple_edits = true,
-		watch_for_changes = false,
+		watch_for_changes = true,
 		view_options = {
 			is_hidden_file = function(name)
 				-- Rule 1: Show files matching specific name

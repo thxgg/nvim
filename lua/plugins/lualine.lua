@@ -14,8 +14,9 @@ return {
 		sections = {
 			lualine_a = { "mode" },
 			lualine_b = { "filename", "diagnostics" },
-			-- lualine_c = { { "aerial", sep = " ❭ " } },
+			lualine_c = { { "aerial", sep = " ❭ " } },
 			lualine_x = {
+				"searchcount",
 				"location",
 				"progress",
 				{ "fileformat", symbols = { unix = "lf", dos = "crlf", mac = "cr" } },
@@ -32,6 +33,6 @@ return {
 			lualine_y = { require("copilot_status").status_string },
 			lualine_z = { { "tabs", symbols = "" } },
 		},
-		extensions = { "aerial", "lazy", "nvim-dap-ui", "nvim-tree", "mason", "trouble" },
+		extensions = { "aerial", "lazy", "mason", "nvim-dap-ui", "oil", "quickfix", "trouble" },
 	},
 }

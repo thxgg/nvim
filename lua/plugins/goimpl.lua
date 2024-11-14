@@ -6,7 +6,8 @@ return {
 		{ "nvim-telescope/telescope.nvim" },
 		{ "nvim-treesitter/nvim-treesitter" },
 	},
-	config = function()
+	opts = {},
+	init = function()
 		require("telescope").load_extension("goimpl")
 	end,
 }
