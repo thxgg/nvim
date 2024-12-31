@@ -47,6 +47,7 @@ return {
 				{ name = "nvim_lua" },
 				{ name = "path" },
 				{ name = "luasnip" },
+				{ name = "vim-dadbod-completion" },
 				{ name = "buffer" },
 			}
 			opts.experimental = {
